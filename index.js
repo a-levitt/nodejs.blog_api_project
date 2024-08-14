@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 
 const app = express();
 const port = 4000;
@@ -35,13 +34,15 @@ let posts = [
 let lastId = 3;
 
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Write your code here//
 
 //CHALLENGE 1: GET All posts
-
+app.get("/posts", (req, res) => {
+  res.json(posts);
+})
 //CHALLENGE 2: GET a specific post by id
 
 //CHALLENGE 3: POST a new post
