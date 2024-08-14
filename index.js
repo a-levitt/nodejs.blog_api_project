@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = 4000;
@@ -34,22 +35,24 @@ let posts = [
 let lastId = 3;
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-//Write your code here//
-
-//CHALLENGE 1: GET All posts
+// GET All posts
 app.get("/posts", (req, res) => {
   res.json(posts);
-})
-//CHALLENGE 2: GET a specific post by id
+});
+//GET a specific post by id
+app.get("/posts/:id", (req, res) => {
+    const post = posts.find((p) => p.id === parseInt(req.params.id));
+    if (!post) res.status(404).json({ message: "Post not found"});
+    res.json(post);
+});
+//POST a new post
 
-//CHALLENGE 3: POST a new post
+//PATCH a post when you just want to update one parameter
 
-//CHALLENGE 4: PATCH a post when you just want to update one parameter
-
-//CHALLENGE 5: DELETE a specific post by providing the post id.
+//DELETE a specific post by providing the post id.
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
